@@ -1,203 +1,278 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <base target="_top">
-  <style>
-    /* CSS Sederhana untuk Tampilan */
-    body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
-    .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    h2 { color: #333; text-align: center; }
-    form { display: grid; grid-template-columns: 1fr; gap: 15px; }
-    label { font-weight: bold; margin-bottom: 5px; display: block; }
-    input[type="text"], input[type="email"], input[type="date"], textarea {
-      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
-    }
-    button { 
-      background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; 
-      cursor: pointer; font-size: 16px; margin-top: 10px; 
-    }
-    button:hover { background-color: #0056b3; }
-    .message { padding: 10px; border-radius: 4px; margin-top: 15px; text-align: center; font-weight: bold; }
-    .success { background-color: #d4edda; color: #155724; border-color: #c3e6cb; }
-    .error { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Pendaftaran Akun Klub - ASKAB PSSI MENTAWAI</title>
+    <style>
+        /* CSS Mobile-First dan Diperkuat */
+        :root {
+            --primary-color: #004c99; 
+            --secondary-color: #f7b000; 
+            --background-color: #f4f7f6;
+            --card-background: #ffffff;
+            --border-radius: 12px;
+            --font-family: 'Poppins', sans-serif;
+        }
 
-    /* Gaya Tabel */
-    #hasilData { margin-top: 30px; }
-    #dataKlubTable { width: 100%; border-collapse: collapse; margin-top: 15px; }
-    #dataKlubTable th, #dataKlubTable td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    #dataKlubTable th { background-color: #f2f2f2; }
-    .data-row:nth-child(even) { background-color: #f9f9f9; }
-    .data-row td:last-child { max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } /* Untuk membatasi tampilan URL */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-  </style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .main-wrapper {
+            max-width: 450px; 
+            margin: 0 auto;
+            background-color: var(--card-background);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding-bottom: 20px; 
+        }
+
+        /* HEADER SECTION (Kepala Halaman) - POSISI STICKY */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 3px solid var(--primary-color);
+            background-color: var(--card-background);
+            position: sticky; 
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            height: 40px; 
+            width: auto;
+            object-fit: contain;
+        }
+
+        .title-group {
+            text-align: center;
+            flex-grow: 1;
+            padding: 0 5px;
+        }
+
+        .org-name {
+            font-size: 1.2rem; 
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 2px;
+            line-height: 1.2;
+        }
+
+        .form-title {
+            font-size: 0.9rem;
+            color: #555;
+            font-weight: 600;
+        }
+        
+        /* FORM CARD */
+        .form-card {
+            padding: 25px 15px 10px 15px;
+        }
+
+        /* FORM ELEMENTS (Kolom Input) */
+        .form-group {
+            margin-bottom: 25px; 
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        /* Tambahkan TEXTAREA untuk styling yang sama */
+        textarea { 
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            min-height: 44px; 
+            transition: all 0.3s ease;
+            -webkit-appearance: none; 
+            appearance: none;
+            resize: vertical; /* Izinkan user merubah tinggi vertikal jika perlu */
+        }
+        
+        /* Tinggi Khusus untuk Kolom Alamat Klub (TEXTAREA) */
+        #alamatKlub {
+            min-height: 88px; /* Ditingkatkan menjadi dua kali lipat (44px * 2) */
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(247, 176, 0, 0.3);
+            outline: none;
+        }
+
+        /* BUTTON STYLE (Tombol Kirimkan) */
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #25D366; 
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px; 
+        }
+
+        .submit-button:hover {
+            background-color: #128C7E;
+        }
+
+        .whatsapp-icon {
+            font-size: 1.3rem;
+        }
+
+        /* Tampilan Desktop */
+        @media (min-width: 451px) {
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                min-height: 100vh;
+                padding-top: 50px; 
+                background-color: #e0e0e0; 
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <div class="main-wrapper"> 
+        <div class="header-container">
+            <img src="https://i.ibb.co.com/gZtpn9GH/Logo-PSSI.png" alt="Logo ASKAB PSSI MENTAWAI" class="logo" id="logo-askab">
 
-<div class="container">
-  <h2>Formulir Pendaftaran Klub</h2>
-  <div id="statusMessage" class="message" style="display: none;"></div>
+            <div class="title-group">
+                <h1 class="org-name">ASKAB PSSI MENTAWAI</h1>
+                <h2 class="form-title">Pendaftaran Akun Klub</h2>
+            </div>
 
-  <form id="clubRegistrationForm">
-    <label for="namaKlub">Nama Klub:</label>
-    <input type="text" id="namaKlub" name="namaKlub" required>
+            <img src="https://i.ibb.co.com/FkF3C2PS/logomentawai.jpg" alt="Logo PSSI" class="logo" id="logo-pssi">
+        </div>
 
-    <label for="julukan">Julukan:</label>
-    <input type="text" id="julukan" name="julukan" required>
+        <div class="form-card">
+            <form id="registrationForm">
+                
+                <div class="form-group">
+                    <label for="namaAdmin">Nama Lengkap Admin <span style="color: red;">*</span></label>
+                    <input type="text" id="namaAdmin" required placeholder="Cth: Rinaldi Kaslan" value="">
+                </div>
 
-    <label for="tanggalBerdiri">Tanggal Berdiri (DD-MM-YYYY):</label>
-    <input type="date" id="tanggalBerdiri" name="tanggalBerdiri" required>
+                <div class="form-group">
+                    <label for="noWa">Nomor WhatsApp Admin (Hanya Angka) <span style="color: red;">*</span></label>
+                    <input type="tel" id="noWa" required pattern="[0-9]+" placeholder="Cth: 081234567890" value="">
+                </div>
 
-    <label for="alamatKlub">Alamat Klub:</label>
-    <textarea id="alamatKlub" name="alamatKlub" rows="3" required></textarea>
+                <div class="form-group">
+                    <label for="namaKlub">Nama Klub (Wajib Huruf Kapital <span style="color: red;">*</span></label>
+                    <input type="text" id="namaKlub" required placeholder="Cth: SIPORA JAYA FC" value="">
+                </div>
 
-    <label for="noTelponKlub">No Telpon Klub (+62 format):</label>
-    <input type="text" id="noTelponKlub" name="noTelponKlub" pattern="^\+62[0-9]{8,15}$" placeholder="+6281234567890" required>
-    
-    <label for="emailKlub">Email Klub:</label>
-    <input type="email" id="emailKlub" name="emailKlub" placeholder="sikerei@gmail.com" required>
+                <div class="form-group">
+                    <label for="julukan">Julukan Klub (Opsional)</label>
+                    <input type="text" id="julukan" placeholder="Cth: sikerei muda" value="">
+                </div>
 
-    <label for="logoKlubUrl">Logo Klub (URL Gambar PNG/JPG/JPEG, maks 200kb - *URL link langsung*):</label>
-    <input type="url" id="logoKlubUrl" name="logoKlubUrl" required>
+                <div class="form-group">
+                    <label for="alamatKlub">Alamat Klub <span style="color: red;">*</span></label>
+                    <textarea id="alamatKlub" required placeholder="Cth: Jl. Raya Tuapejat Km.8 Desa Sipora Jaya Kecamatan Sipora Utara"></textarea>
+                </div>
 
-    <button type="submit" id="submitBtn">Daftar Klub</button>
-  </form>
+                <button type="submit" class="submit-button">
+                    <i class="fab fa-whatsapp whatsapp-icon"></i>
+                    Kirim Ke WhatsApp Admin
+                </button>
+            </form>
+        </div>
+    </div>
 
-  <hr>
+    <script>
+        // JavaScript untuk memvalidasi form dan membuat tautan WhatsApp profesional
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
 
-  <div id="hasilData">
-    <h3>Data Klub yang Sudah Terdaftar (Read Only)</h3>
-    <table id="dataKlubTable">
-      <thead>
-        <tr>
-          <th>Nama Klub</th>
-          <th>Julukan</th>
-          <th>Tanggal Berdiri</th>
-          <th>Alamat Klub</th>
-          <th>No Telpon</th>
-          <th>Email</th>
-          <th>Logo (URL)</th>
-        </tr>
-      </thead>
-      <tbody>
-        </tbody>
-    </table>
-  </div>
-</div>
+            const targetWa = "6281270136789"; // Nomor WA Admin
 
-<script>
-  // JavaScript untuk Interaksi Formulir dan Tampilan Data
-  
-  const form = document.getElementById('clubRegistrationForm');
-  const statusMessage = document.getElementById('statusMessage');
-  const submitBtn = document.getElementById('submitBtn');
-  const dataTableBody = document.querySelector('#dataKlubTable tbody');
+            // Ambil data
+            const namaAdmin = document.getElementById('namaAdmin').value.trim();
+            const noWa = document.getElementById('noWa').value.trim();
+            const namaKlub = document.getElementById('namaKlub').value.trim();
+            const julukan = document.getElementById('julukan').value.trim() || 'Tidak Ada'; 
+            // Ambil data dari TEXTAREA
+            const alamatKlub = document.getElementById('alamatKlub').value.trim(); 
 
-  // Menampilkan pesan sukses/gagal
-  function showMessage(type, text) {
-    statusMessage.style.display = 'block';
-    statusMessage.className = `message ${type}`;
-    statusMessage.innerText = text;
-  }
+            // Validasi
+            if (!namaAdmin || !noWa || !namaKlub || !alamatKlub) {
+                alert("⚠️ Pendaftaran Gagal. Mohon lengkapi semua kolom yang bertanda * (wajib)!");
+                return;
+            }
 
-  // Mengubah format tanggal dari YYYY-MM-DD (HTML input type date) menjadi DD-MM-YYYY
-  function formatTanggal(dateString) {
-    if (!dateString) return '';
-    const [year, month, day] = dateString.split('-');
-    return `${day}-${month}-${year}`;
-  }
+            if (!/^[0-9]+$/.test(noWa)) {
+                alert("⚠️ Pendaftaran Gagal. Nomor WhatsApp Admin harus berupa angka.");
+                return;
+            }
 
-  // Menangani submit formulir (Create)
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    submitBtn.disabled = true;
-    submitBtn.innerText = 'Memproses...';
-    statusMessage.style.display = 'none';
+            // Pesan WhatsApp Profesional
+            const message = 
+`*PERMOHONAN PENDAFTARAN AKUN KLUB BARU SEPAKBOLA*
+____________________________
 
-    const formData = new FormData(form);
-    const dataKlub = {};
-    for (const [key, value] of formData.entries()) {
-      dataKlub[key] = value;
-    }
-    
-    // Format tanggal ke DD-MM-YYYY sebelum dikirim ke GAS
-    dataKlub.tanggalBerdiri = formatTanggal(dataKlub.tanggalBerdiri);
-    
-    // Panggil fungsi Apps Script untuk menyimpan data
-    google.script.run
-      .withSuccessHandler(handleSuccess)
-      .withFailureHandler(handleError)
-      .simpanData(dataKlub);
-  });
+Kepada Yth. Admin ASKAB PSSI MENTAWAI,
 
-  // Callback saat Apps Script berhasil
-  function handleSuccess(response) {
-    submitBtn.disabled = false;
-    submitBtn.innerText = 'Daftar Klub';
-    
-    showMessage(response.success ? 'success' : 'error', response.message);
+Kami dari manajemen klub Mengajukan Pendaftaran Akun Klub baru melalui formulir digital. Berikut adalah detail data yang kami sampaikan:
 
-    if (response.success) {
-      // Sembunyikan formulir setelah pendaftaran berhasil (Input Satu Kali)
-      form.style.display = 'none';
-      
-      // Muat ulang data untuk menampilkan data baru
-      muatDataKlub();
-    }
-  }
+*I. DATA ADMINISTRATOR (PIC)*
+* Nama Lengkap: *${namaAdmin}*
+* Nomor WhatsApp: *${noWa}*
 
-  // Callback saat Apps Script gagal
-  function handleError(error) {
-    submitBtn.disabled = false;
-    submitBtn.innerText = 'Daftar Klub';
-    showMessage('error', 'Terjadi kesalahan pada server: ' + error);
-  }
+*II. DATA KLUB*
+* Nama Resmi Klub: *${namaKlub}*
+* Julukan Klub: *${julukan}*
+* Alamat Domisili Klub: *${alamatKlub}*
 
-  // Fungsi untuk memuat dan menampilkan semua data klub (Read)
-  function muatDataKlub() {
-    dataTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Memuat data...</td></tr>';
-    
-    // Panggil fungsi Apps Script untuk membaca data
-    google.script.run
-      .withSuccessHandler(tampilkanData)
-      .withFailureHandler(handleError)
-      .bacaData();
-  }
+____________________________
+Mohon kiranya data ini dapat segera diproses lebih lanjut.
+Terima kasih atas perhatian dan kerjasamanya.`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            const waLink = `https://wa.me/${targetWa}?text=${encodedMessage}`;
 
-  // Menampilkan data yang diterima dari Apps Script
-  function tampilkanData(data) {
-    dataTableBody.innerHTML = '';
-    
-    if (data.length === 0) {
-      dataTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Belum ada klub yang terdaftar.</td></tr>';
-      return;
-    }
-
-    data.forEach(row => {
-      const tr = document.createElement('tr');
-      tr.className = 'data-row';
-      
-      // Urutan kolom di Apps Script: 
-      // [Nama Klub, Julukan, Tanggal Berdiri, Alamat Klub, No Telpon Klub, Email Klub, Logo Klub (URL)]
-      
-      // Karena tanggal sudah diformat di Apps Script, kita tinggal tampilkan
-      tr.innerHTML = `
-        <td>${row[0]}</td>
-        <td>${row[1]}</td>
-        <td>${row[2]}</td>
-        <td>${row[3]}</td>
-        <td>${row[4]}</td>
-        <td>${row[5]}</td>
-        <td><a href="${row[6]}" target="_blank" title="${row[6]}">Link Logo</a></td>
-      `;
-      dataTableBody.appendChild(tr);
-    });
-  }
-
-  // Muat data saat halaman pertama kali dibuka
-  window.onload = muatDataKlub;
-  
-</script>
-
+            // Arahkan ke WhatsApp
+            window.open(waLink, '_blank');
+        });
+        
+        // Membatasi input Nomor WA hanya angka
+        document.getElementById('noWa').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+        
+    </script>
 </body>
 </html>
